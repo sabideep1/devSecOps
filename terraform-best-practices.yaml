@@ -1,0 +1,29 @@
+This will make the terraform project more robust and easier to work in a team
+Terraform State & State File - Best Practices around State:
+1. Manipulate state only through TF commands:
+   - Do not manually change the TF files
+
+2. Remote State:
+   - configure remote backend [S3, Azure Container, Terraform Cloud ]
+
+3. State Locking:
+   - To prevent concurrent change to the state file [ S3 uses Dynamo DB for state locking ]
+
+4. Back up State File:
+   - Always backup you state file. [Enable Versioning ]
+
+5. Use 1 State per Environment:
+  - Use workspace and use 1 state file per each environment [ dev, test, prod]
+  - Each state file will have its own remote backened with locking and versioning
+
+6. Host TF code in Git repository:
+   - Use Source code for sharing and tracking/versioning the code
+   - Collaboration, Versioning and Tracking
+
+7. CI for TF Code:
+   - DO not use terraform command directly
+   - Follow Code Review, Merge Request and apply the terraform code with CI tools
+
+8. Execute TF only in an automated build:
+   - The terraform command should be executed from the automated build/deploy
+   - The process will be streamlined infrastructure automationand all the terraform change will happen from the same place
