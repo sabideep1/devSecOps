@@ -1,0 +1,46 @@
+Best Practice for docker:
+To include security, optimize the docker image and make the Dockerfile cleaner
+
+1. Use official and verified Docker Images as Base Image: 
+   - This will make Dockerfile cleaner and but also the image is verified and official
+
+2. Use Specific Docker Image Versions:
+   - Do not use latest tag, you will not know which version of image you are deploying
+   - This will provide transparency on what version of image you are using
+
+3. Use Small-Sized Official Images:
+   - Use base image which is required for your application
+   - this will save storage in repo, the image can be transferred faster
+   - Lots of tools are already installed and can have large vulnerabilities and security risk
+
+4. Optimize Caching Image Layers:
+   - When creating Dockerfile, once the layer changes, downstream layer needs to be created again, 
+   & Caches will be invalidated and rebuilt
+   - Order Dockerfile cammands from least to most frequently changing to take advantage of caching
+
+5. Use .dockerignore file:
+   - we dont need  target, build dir or .git, .cache or .md file
+
+6. Make use of Multi-Stage Builds:
+   - When you need contents to build the image but you don't need them in final image to run the application
+   - Test Dependencies, development tools, build tools, pom.xml, package.json files, jdk is needed to compiled 
+     but no need to run the application to run
+   #Build stage , create .war file
+   - FROM maven as build 
+   # Run Stage
+  - COPY --from=build $source $destination
+      
+7.Use the Least Privileged User :
+  - By default, docker run will root account if no user is specified
+  - Container potentially have root access to the Docker Host
+  - Easier privelege escalation for Attacker
+  - Create dedicated user:group and provied required permission to run the application
+  - USER test
+
+8.Scan your Images for Security Vulnerabilities:
+  - Continuous scan the image before push it to the repo
+  - This should be part of CI process
+  - Scan uses the DB of vulnerabilities and helps you provide the report
+   
+
+
