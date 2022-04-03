@@ -1,0 +1,40 @@
+CertManager: 
+-  To Auto generate CSR, Isused and Generate Certificate before the 30 days of expiry.
+- This should be configured for each cluster
+- Require private/public key and the endpoint of the issuer
+- Helm installation with terraform [needs kubeconfig files to connect to the cluster] 
+
+OpaGatekeeper: Policy and Governance for Kubernetes [rego language ]
+- Once the user is authenticated, OPA comes into picture which has policy defined with authorization
+- You deploy OPA in the environment, configure the policy and all services will reach out to OPA for 
+   authorizing the request OPA will verify the request and rewturn allow or deny response
+- Enforce policies on what users can or cannot do in the cluster
+OPA in Kubernetes: This will work as admission controller for validating and mutating webhook
+- Create Validatingwebhook
+- Webhook will send request to OPA endpoint 
+- OPA will check the policy and returns allow or deny based on the policy
+- Examples: trusted registry, ingress Host, wildcard certificates
+- Kube-mgmt service is deployed as sidecard container along with OPA and 
+ - create configmap Resource with label openpolicy and add OPA policy in configmap data
+- kube-mgmt service is used to replicate kubernetes resources to OPA
+- kube-mgmt service is used to load policies into OPA via kubernetes
+All the requests will go thru admission controller through validating webhook to OPA
+
+CIS Benchmark: [Center for Internet Security]
+- checks for ports opened
+- checks for root access
+- checks for sudo access
+- COnfigure firewall
+- Only necessary services are enabled
+- Filesystem permission is correctly configured
+- auditing and logging is enabled
+kube-bench tool is developed by aqua security
+Aqua tracee: Runtime eBPF threat detection engine with syscalls
+kubesec: To static analyze kubernetes yaml file. [deployment.yaml, pod.yaml, *.yaml]
+  - kubesec scan pod.yaml or deploy in your cluster and run curl POST command
+Trivy: To track CVE[Common Vulnerabilities  and Exposure ] Scan Image
+App Armor:
+SecurityContext:
+Seccompprofile:
+Aquasec:
+Audit Logs:
