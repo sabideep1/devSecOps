@@ -1,4 +1,17 @@
+FALCO: Kubernetes threat detection engine
+Benefits:
+  - Strengthen container security
+  - Reduce risk via immediate alerts
+  - Leverage most current detection rules
+
+
 Falco needs to know what syscalls are coming from Application in User Space to kernel space
 Falco interact with kernel with eBPF
 The syscalls are then analyed by sysdig libraries in user space
 The events are then filtered by predefined rules and policies
+
+Falco rules:
+  rules.yaml: 
+    - rule: define rule
+    - list: add items to include
+    - macros: define condition variable
