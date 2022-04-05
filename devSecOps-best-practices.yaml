@@ -1,0 +1,24 @@
+Code: focus on secret managment
+Build: Code Quality SAST [Static Application Securirty Testing ]
+Test: Run Quality DAST [Dynamic Application Security Testing]
+Deploy:
+Operate: Hardening
+CI server: Bug Tracking and Metrics Dashboard
+SonarQube:
+Image Scanning for vulnerabilites:
+
+Security risks:
+- vulnerable/outdated 3rd party libraries are used
+- Licensing issues
+- Sensitive/Password is hardwccoded
+- Vulnerable Docker base image is used
+- kubernetes is misconfigured
+Security team will run tests and may find above issues
+Security checks/audits can delay the process
+With microservices, 
+it exposes API for each service that means more attack surface
+microservice: more attack surface
+containers: more attack surface
+Cloud Platform: more attack surface
+Kubernetes:  more attack surface
+
