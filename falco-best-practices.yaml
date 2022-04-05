@@ -1,0 +1,4 @@
+Falco needs to know what syscalls are coming from Application in User Space to kernel space
+Falco interact with kernel with eBPF
+The syscalls are then analyed by sysdig libraries in user space
+The events are then filtered by predefined rules and policies
