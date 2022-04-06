@@ -1,0 +1,59 @@
+#Rancher
+local: upstream cluster
+webhook, cattle-system
+Downstream cluster: all other cluster added thru portal
+
+
+#gitOps
+Infrastructure as Code Done Right.
+Policy as CODE
+Network as CODE
+Security as CODE
+Configuration as CODE
+
+Issues:
+- No Pull Requests [Merge Requests]
+- No CODE Reviews
+- No Collaboration
+- No Automated Tests
+
+Application: Once the code is completed
+- Kubectl apply 
+- terraform apply from the local system
+- ALl the users need proper permission to infrastructure
+- This can cause issue with security
+- Hard to trace who executed
+- Will know only when the infrastructure breaks
+
+Still implementation is ineffecient and manaul
+
+With GitOPs: when you push it to main branch
+- IAC code is stored in github
+- Create Pull/Merge Requests and collaborate
+- RUN CI pipeline to validate and run automated tests
+- Once tested, Review and Approve Changes
+- RUN CD Pipeline to apply chanegs
+- Automated and Transparent Process
+
+CD pipeline:
+- In gitops there are 2 ways of deployment
+- Push Deployment: Jenkins, CI/CD 
+- Pull Deployment: 
+  - Agent is installed in the environment
+  - Monitors and Compares the desired state
+  - Applies the changes necessary to get to desired state
+  eg. fluxCD and ArgoCD
+
+- Easy Rollback
+- git rever to undo the changes to get the env to last working state
+
+
+
+
+
+
+
+
+
+
+

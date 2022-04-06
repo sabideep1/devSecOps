@@ -1,3 +1,7 @@
+Each module has its own backened
+data source is created for the main backend.tfstate file
+get the kubeconfig file from the data source which is required to run kubectl/helm command in k8s
+
 This will make the terraform project more robust and easier to work in a team
 Terraform State & State File - Best Practices around State:
 1. Manipulate state only through TF commands:

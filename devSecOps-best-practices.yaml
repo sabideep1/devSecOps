@@ -22,3 +22,14 @@ containers: more attack surface
 Cloud Platform: more attack surface
 Kubernetes:  more attack surface
 
+Think about security at the beginning and fix the issue right way
+Security team beacomes an advisor/facilator for Developers
+Security team with create security policies.
+Select Automation tools for detecting security issues
+- Pre-commit hook:
+- Source Composition Analysis:
+- Static App Security Testing (SAST):
+- Dynamic App Security testing (DAST):
+- Security in Infrastructure:
+- Secret Management:
+Train developers and Operators

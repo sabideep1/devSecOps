@@ -1,1 +1,19 @@
-github-best-practices.yaml
+Git Flow work FLow
+1. Main Branch: Master
+2. Create Dev Branch from Master
+3. Create Feature branch out of Dev branch
+3. Once the F1/feature is completed merge it to Dev Branch
+4. If F2 branch is created before F1 is merged, 
+    - then changes in dev branch after F1 is merged should be merged to F2 branch
+
+The overall flow of Gitflow is:
+
+A develop branch is created from main
+Feature branches are created from develop
+When a feature is complete it is merged into the develop branch
+
+A release branch is created from develop
+When the release branch is done it is merged into  main branch and tagged with version
+Release branch is also merged to develop branch
+If an issue in main is detected a hotfix branch is created from main
+Once the hotfix is complete it is merged to both develop and main
