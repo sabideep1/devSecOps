@@ -3,12 +3,15 @@ terraform
 falco
 devsecops
 Docker
+gitOps
+github
 
 #TO DO
+istio
+ArgoCD
 helm
 ingress
-istio
-github
-gitOps
-ArgoCD
+Rancher
+twistlock
+Trivy
 

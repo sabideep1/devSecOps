@@ -1,0 +1,43 @@
+###ISTIO SERVICE MESH ####
+Service Mesh manages the communication between microservices(pods)
+#advantage
+Business Logic
+COmmunication 
+Security
+Retry Logic
+Metrics and tracing for the services
+
+Control Plane and Sidecar is injected to each microservice
+Traffic Splitting: You can split traffic to the versions of application  [Canary deployment]
+
+
+ control plane : It injects Envoy Proxy to each MS pod
+ Istiod: COnfiguration, Discovery and Certificates
+ Data Plane: Envoy Proxy
+
+ CRD: Extending Kubernetes API to create custom Kubernetes Component and can be used like native kubernetes objects
+
+ 2 Main CRD:
+ 1. Virtual Service: How you Route a traffic to a given Destination
+ 2. Destination Rule: Policy or LB RUle can be implemented on the traffic
+
+ Istiod COnverts these routing rules to Envoy-specific configuration and is propagated to sidecar proxies.
+ Istio has internal Registry for Services and Endpoints, and when the new service is deployed, Istio Automatically detects the service.
+ Security: istiod acts as CA and generates and signs certificates for the envoy proxies. mtls communication
+
+ Ingress Gateway: Entrypoint to the CLuster. Similar to nginx Ingress Controller. Runs as a pod and acts as LB
+ User --> Ingress Gateway [Evalautes the Virtual Serivce RUle ]--> VirtualService -->Envoy Proxy ->MS[pod]
+
+ OPERATOR: an operator is an application-specific controller that can help you package, 
+ deploy, and manage a Kubernetes application. Operators Extend Kubernetes Functionality
+HPA Kubernetes Operator
+Istio Operator
+To summarize a Kubernetes operator’s workflow:
+
+User makes changes to a CRD
+The operator tracks the CRD and identifies change events
+The operator reconciles the CRD state with the desired state
+The operator adjusts cluster state to the desired state
+
+
+

@@ -1,0 +1,22 @@
+CD workflow without Argo CD:
+  challenges:
+  - Build Automation tools should be installed with kubectl, helm 
+  - Jenkins needs access to k8s
+  - Jenkins need access to Cloud Provider [NSG]
+  - Security Challenges
+  - With many projects and clusters, difficult to track
+  - No visibility once the CD is triggered
+  - CD part can be Improved
+
+How Argo CD works: It is built for k8s with gitops approch
+- Argo CD is part of the cluster
+- Argo CD agent pulls manifest changes and applies them
+- Argo CD is track the git repo and look for the changes
+
+How it works?
+- Jenkins will Build the image and push the image to registry
+- Update the deployment.yaml with Image tag and update other yaml files
+- Push it to the git repo where Argo CD is tracking
+- Separate repo for app source code and k8s manifest yaml file
+- Even separate repo for configuration management code
+
