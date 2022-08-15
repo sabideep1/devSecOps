@@ -1,3 +1,58 @@
+https://docs.microsoft.com/en-us/azure/architecture/reference-architectures/containers/aks/secure-baseline-aks?toc=https%3A%2F%2Fdocs.microsoft.com%2Fen-us%2Fazure%2Faks%2Ftoc.json&bc=https%3A%2F%2Fdocs.microsoft.com%2Fen-us%2Fazure%2Fbread%2Ftoc.json#monitor-and-collect-metrics
+
+1. Authenticationa dn Authorization: Role Based Access Control
+2. Cluster Security: 
+   - Enable Threat Protection: Enable Defender for container to assess cluster configuration, security recommendation
+                               Provide Vulnerabiltity scan and real time alert for nodes and pods
+   - Restrict API server Access: With RBAC
+   - Restric Access to Instance Metadata: Network Policy to restric pod egress to the metadata or Pod Identity can be used
+   - Secure Container access to Resources: 
+        - Provide least number of permission
+        - SecurityContext
+            - allowPrivilegeEscalation to False
+            - Linux Capabilities
+            - SeLinux Label to define policies for servics, process and FileSystem
+        - Run contianer with service Account/avoid using default service Account
+        - Use Built in Linux Security Features AppArmor[System function,read/write]/Seccomp Profile[Process level, file permisson[chmod]]
+        - Upgrade AKS CLuster Regulary for Bug fixes and security patches
+        - Use Kured to watch for Linux Nodes that require a reboot and reboot the node in the scheduled time you have configured
+           - Kured will check for /var/run/reboot-required and communicates to API server for the rebooting process
+        - SecurityContext
+    - Egress traffic flow: Uuse UDR with next HOP to be Azure Firewall Private IP for zero Trust model
+    - Policy Management: Azure Policy is handled by OPA gatekeeper in the cluster. Audit or Deny action
+      - Opa gatekeeper pods are deployed in gatekeeper-system
+3. Container Image Management:  Integrate and Run Container Scan and RemediationTool/ Defender for Container with Registry
+   - Secure the Image and Runtime
+     - Scan the image for vulnerabilities
+     - integrate with CI/CD process to scan images with twistlock or aqusec
+     - ALways build images from base image and apply patches to the verified base Image
+     - If base Image is updated, downstream images should also be updated
+
+
+4. Multi Tenancy and cluster Isolation: Need of Isolate Teams and WorkLoads in AKS
+   - Design clusters for multi-tenancy with Logical Isolation of NameSpaces
+     - Scheduling: Taints and Tolerations, NodeSelector, Node and Pod Affinity
+     - Network Policy: To restrict ingres/egress traffic from the Pods
+     - Authentication/Authorization: RBAC/Pod Idenitities
+     - Secure Traffic with WAF
+     - Securely connect to AKS Node with bastion Host
+5. Business Continuity and Disaster Recover: Uptime SLA for controle Plane
+   - Plan for multi Region Deployment
+     - AKS region AVailabiltity/ close to users
+     - Use Azure paired Regions/ Planned maintenance is done in series with at lease 24hour delay
+     - service Availabiltity: hot/hot, hot/warm, hot/cold
+     - Azure Traffic manger: DNS Based Traffic LB -> Directs traffic to closest AKS cluster and applications
+     - Azure Front Door Service: SPlit TCP based Anycast protocol -- connects end users to Front Door POP(Point of Presence)
+     - Inteconnect regions with Global  vnet Peering
+     - Enable geo replication for images
+     - Remove service state from containers
+     - Create Storage Migration Plan
+       - Infrastructure based Asynchronous Replication: Eg Velereo, ceph,rook
+       - Application based Asyncrhonous Replication
+
+
+
+
 CertManager: 
 -  To Auto generate CSR, Isused and Generate Certificate before the 30 days of expiry.
 - This should be configured for each cluster
@@ -13,7 +68,7 @@ OPA in Kubernetes: This will work as admission controller for validating and mut
 - Create Validatingwebhook
 - Webhook will send request to OPA endpoint 
 - OPA will check the policy and returns allow or deny based on the policy
-- Examples: trusted registry, ingress Host, wildcard certificates
+- Examples: trusted registry, ingress Host, wildcard certificates, namespace label
 - Kube-mgmt service is deployed as sidecard container along with OPA and 
  - create configmap Resource with label openpolicy and add OPA policy in configmap data
 - kube-mgmt service is used to replicate kubernetes resources to OPA
@@ -33,8 +88,11 @@ Aqua tracee: Runtime eBPF threat detection engine with syscalls
 kubesec: To static analyze kubernetes yaml file. [deployment.yaml, pod.yaml, *.yaml]
   - kubesec scan pod.yaml or deploy in your cluster and run curl POST command
 Trivy: To track CVE[Common Vulnerabilities  and Exposure ] Scan Image
-App Armor:
+App Armor: To restrict system functions, read/write/mount. 
+  Helps to logically islolate container from
+    the underlying Node
 SecurityContext:
-Seccompprofile:
+Seccompprofile: AT process level and you can limit contianer process calls
 Aquasec:
 Audit Logs:
+https://www.atatus.com/blog/kubernetes-security-9-best-practices-for-keeping-it-safe/
